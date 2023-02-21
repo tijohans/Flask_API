@@ -1,29 +1,22 @@
 from flask import Flask, request, jsonify
 from pymongo import MongoClient
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 app = Flask(__name__)
 
-contacts = [
-    {
-        'id': 1,
-        'name': 'Ivar Aasen',
-        'age': 18
-    },
-    {
-        'id': 2,
-        'name': 'Olga Ola Helge Persson III',
-        'age': 87
-    },
-    {
-        'id': 3,
-        'name': 'Anders Petter Anderson',
-        'age': 'aAa presis'
-    }
-]
+
+client = MongoClient(os.getenv('DB_CONNECTION'))
+db = client.contact_db
+
+collection = db.contacts
+
+contacts = []
 
 @app.route('/api/contacts')
 def getContacts(): 
-    return jsonify(contacts)
+    return ''
 
 @app.route('/api/contacts', methods=['POST'])
 def createContact():
